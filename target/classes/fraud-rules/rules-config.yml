@@ -1,0 +1,33 @@
+rules:
+  - name: HighAmount
+    type: amount
+    priority: 3
+    params:
+      threshold: 20000
+
+  - name: AccountBlacklist
+    type: account
+    priority: 1
+    params:
+      source: "fraud-rules/suspicious-accounts.txt"
+
+  - name: GeoComposite
+    type: composite
+    priority: 2
+    params:
+      operator: "AND"
+      rules:
+        - Location
+        - IP
+
+  - name: Location
+    type: custom-location
+    priority: 4
+    params:
+      class: "com.frauddetectservice.fraudrules.LocationRule"
+
+  - name: IP
+    type: custom-ip
+    priority: 5
+    params:
+      class: "com.frauddetectservice.fraudrules.IpRule"

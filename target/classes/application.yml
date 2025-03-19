@@ -1,0 +1,44 @@
+# -*- coding: utf-8 -*-
+# Spring Boot 应用配置
+spring:
+  application:
+    name: fraud-detect-service   # 应用名称，用于标识服务
+  profiles:
+    active: default                # 激活的配置环境（默认 default）
+
+# Google Cloud Platform (GCP) 配置
+gcp:
+  project-id: omega-palace-454013-m1          # GCP 项目 ID
+  service-account-key-path:  ${GOOGLE_APPLICATION_CREDENTIALS}
+  #service-account-key-path:  D:\Projects\frauddetectservice\omega-palace-454013-m1-6980f02eb9ce.json
+  pubsub:
+    topic-id: FraudDetection                   # Pub/Sub 主题 ID# 用于交易处理的主题
+    subscription-id: FraudDetection-sub        # Pub/Sub 订阅 ID
+
+# 服务配置
+server:
+  port: 8080                                   # 服务运行的端口号
+  tomcat:
+    threads:
+      max: 500
+      min-spare: 20
+    connection-timeout: 5000ms
+    accept-count: 100
+
+
+# 日志配置
+logging:
+  level:
+    root: INFO                                 # 全局日志级别：INFO
+    com.frauddetectservice: DEBUG                 # 指定包的日志级别：DEBUG
+  file:
+    name: logs/application.log                # 日志文件路径
+
+# Google Pub/Sub 订阅者配置
+pubsub:
+  subscriber:
+    maxAckExtensionPeriod: 10                 # 最大消息确认延长时间（秒）
+    maxOutstandingElementCount: 1000          # 最大未确认的消息数量
+    maxOutstandingRequestBytes: 10000000      # 最大未确认的消息字节数
+mq:
+  type: GCP

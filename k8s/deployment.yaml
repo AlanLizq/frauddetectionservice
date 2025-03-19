@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraud-detection
+  labels:
+    app: fraud-detection
+spec:
+  replicas: 3  # 设置副本数为3.
+  selector:
+    matchLabels:
+      app: fraud-detection
+  template:
+    metadata:
+      labels:
+        app: fraud-detection
+    spec:
+      containers:
+        - name: fraud-detection
+          image: us-central1-docker.pkg.dev/omega-palace-454013-m1/frauddetectiondemo/frauddetectservice:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /app/credentials/service-account-key.json
+          volumeMounts:
+            - name: credentials-volume
+              mountPath: /app/credentials/service-account-key.json
+              subPath: service-account-key.json
+            - name: config-volume
+              mountPath: /app/config/application.yml
+              subPath: application.yml
+            - name: rule-config-volume
+              mountPath: /app/config/fraud-rules/rules-config.yml
+              subPath: rules-config.yml
+          resources:  # 设置适当的资源请求和限制
+            requests:
+              cpu: 100m   # 每个 Pod 请求500m CPU (即 0.5 vCPU)
+              memory: 256Mi  # 每个 Pod 请求 1Gi 内存
+            limits:
+              cpu: 500m      # 每个 Pod 最大使用1 vCPU
+              memory: 1Gi  # 每个 Pod 最大使用 2Gi 内存
+      volumes:
+        - name: credentials-volume
+          secret:
+            secretName: google-credentials
+        - name: config-volume
+          configMap:
+            name: fraud-detection-config
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 25%  # 允许最大25%的Pod不可用
+      maxSurge: 25%        # 允许最大25%的Pod扩展

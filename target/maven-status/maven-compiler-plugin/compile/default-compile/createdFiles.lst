@@ -1,0 +1,14 @@
+com\frauddetectservice\controller\FraudDetectionController.class
+com\frauddetectservice\service\DetectionService.class
+com\frauddetectservice\fraudRules\CompositeRule.class
+com\frauddetectservice\fraudRules\AmountThresholdRule.class
+com\frauddetectservice\fraudRules\AccountBlacklistRule.class
+com\frauddetectservice\mq\MQPublisher.class
+com\frauddetectservice\logging\DistributedLoggingService.class
+com\frauddetectservice\fraudRules\CompositeType.class
+com\frauddetectservice\model\Transaction.class
+com\frauddetectservice\mq\MQServiceFactory.class
+com\frauddetectservice\mq\MQSubscriber.class
+com\frauddetectservice\logging\GcpLoggingService.class
+com\frauddetectservice\service\AlertService.class
+com\frauddetectservice\fraudRules\FraudRule.class
