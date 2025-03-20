@@ -1,0 +1,6 @@
+NAME                              READY   STATUS    RESTARTS   AGE
+fraud-detection-b8f4df4b4-8glwf   1/1     Running   0          84s
+fraud-detection-b8f4df4b4-rth6l   1/1     Running   0          86s
+fraud-detection-b8f4df4b4-dwhrk   1/1     Running   0          35s
+fraud-detection-b8f4df4b4-sderf   1/1     Running   0          35s
+fraud-detection-b8f4df4b4-v323f   1/1     Running   0          81s

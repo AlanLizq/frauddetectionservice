@@ -9,6 +9,6 @@ spec:
     app: fraud-detection
   ports:
     - protocol: TCP
-      port: 80  # 外部访问的端口
-      targetPort: 8080  # Pod 内部服务的端口
-  type: LoadBalancer  # 创建外部负载均衡器
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

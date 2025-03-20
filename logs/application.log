@@ -1,0 +1,520 @@
+2025-03-20T20:42:29.666+08:00  INFO 13780 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Starting FraudDetectionServiceApplication using Java 21.0.6 with PID 13780 (D:\Projects\frauddetectservice\target\classes started by Lenovo in D:\Projects\frauddetectservice)
+2025-03-20T20:42:29.666+08:00 DEBUG 13780 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Running with Spring Boot v3.2.1, Spring v6.1.2
+2025-03-20T20:42:29.666+08:00  INFO 13780 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : The following 1 profile is active: "default"
+2025-03-20T20:42:30.541+08:00  INFO 13780 --- [fraud-detect-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-20T20:42:30.541+08:00  INFO 13780 --- [fraud-detect-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-20T20:42:30.541+08:00  INFO 13780 --- [fraud-detect-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2025-03-20T20:42:30.619+08:00  INFO 13780 --- [fraud-detect-service] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-20T20:42:30.619+08:00  INFO 13780 --- [fraud-detect-service] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 897 ms
+2025-03-20T20:42:32.269+08:00  INFO 13780 --- [fraud-detect-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-03-20T20:42:32.284+08:00  INFO 13780 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Started FraudDetectionServiceApplication in 3.065 seconds (process running for 3.535)
+2025-03-20T20:43:22.318+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-20T20:43:22.318+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-20T20:43:22.318+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-03-20T20:43:22.628+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:43:22.628+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-5017-49fd-9a9d-27ecd4467dcf","accountId":"caxtdm","amount":13153,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:43:28.875+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-4] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:43:28.875+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-4] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:43:32.444+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:43:32.444+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+2025-03-20T20:43:37.606+08:00  INFO 13780 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: ERROR
+2025-03-20T20:43:37.606+08:00 ERROR 13780 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Error while processing transaction: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+
+java.lang.RuntimeException: Failed to initialize Publisher: Waited 5 seconds (plus 15316300 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@4bdf3246[status=PENDING]
+	at com.frauddetectservice.mq.MessagePublisherService.publish(MessagePublisherService.java:54) ~[classes/:na]
+	at com.frauddetectservice.controller.FraudDetectionController.detectFraud(FraudDetectionController.java:36) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:262) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.util.concurrent.TimeoutException: Waited 5 seconds (plus 15316300 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@4bdf3246[status=PENDING]
+	at com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:539) ~[guava-33.4.0-jre.jar:na]
+	at com.google.api.core.AbstractApiFuture.get(AbstractApiFuture.java:58) ~[api-common-2.46.1.jar:2.46.1]
+	at com.frauddetectservice.mq.MessagePublisherService.publish(MessagePublisherService.java:46) ~[classes/:na]
+	... 49 common frames omitted
+
+2025-03-20T20:46:28.528+08:00  INFO 4580 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Starting FraudDetectionServiceApplication using Java 21.0.6 with PID 4580 (D:\Projects\frauddetectservice\target\classes started by Lenovo in D:\Projects\frauddetectservice)
+2025-03-20T20:46:28.528+08:00 DEBUG 4580 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Running with Spring Boot v3.2.1, Spring v6.1.2
+2025-03-20T20:46:28.528+08:00  INFO 4580 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : The following 1 profile is active: "default"
+2025-03-20T20:46:29.337+08:00  INFO 4580 --- [fraud-detect-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-20T20:46:29.352+08:00  INFO 4580 --- [fraud-detect-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-20T20:46:29.352+08:00  INFO 4580 --- [fraud-detect-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2025-03-20T20:46:29.430+08:00  INFO 4580 --- [fraud-detect-service] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-20T20:46:29.430+08:00  INFO 4580 --- [fraud-detect-service] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 847 ms
+2025-03-20T20:46:30.327+08:00  INFO 4580 --- [fraud-detect-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-03-20T20:46:30.334+08:00  INFO 4580 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Started FraudDetectionServiceApplication in 2.177 seconds (process running for 2.587)
+2025-03-20T20:46:33.004+08:00  INFO 4580 --- [fraud-detect-service] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-20T20:46:33.004+08:00  INFO 4580 --- [fraud-detect-service] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-20T20:46:33.004+08:00  INFO 4580 --- [fraud-detect-service] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-03-20T20:46:33.296+08:00  INFO 4580 --- [fraud-detect-service] [http-nio-8080-exec-2] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:46:33.296+08:00  INFO 4580 --- [fraud-detect-service] [http-nio-8080-exec-2] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+2025-03-20T20:46:38.378+08:00  INFO 4580 --- [fraud-detect-service] [http-nio-8080-exec-2] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: WARNING
+2025-03-20T20:46:38.378+08:00  WARN 4580 --- [fraud-detect-service] [http-nio-8080-exec-2] c.f.logging.GoogleCloudLoggingService    : Fraud risk transaction detected: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+2025-03-20T20:51:56.667+08:00  INFO 12484 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Starting FraudDetectionServiceApplication using Java 21.0.6 with PID 12484 (D:\Projects\frauddetectservice\target\classes started by Lenovo in D:\Projects\frauddetectservice)
+2025-03-20T20:51:56.667+08:00 DEBUG 12484 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Running with Spring Boot v3.2.1, Spring v6.1.2
+2025-03-20T20:51:56.667+08:00  INFO 12484 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : The following 1 profile is active: "default"
+2025-03-20T20:51:57.402+08:00  INFO 12484 --- [fraud-detect-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-20T20:51:57.418+08:00  INFO 12484 --- [fraud-detect-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-20T20:51:57.418+08:00  INFO 12484 --- [fraud-detect-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2025-03-20T20:51:57.508+08:00  INFO 12484 --- [fraud-detect-service] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-20T20:51:57.508+08:00  INFO 12484 --- [fraud-detect-service] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 798 ms
+2025-03-20T20:51:58.328+08:00  INFO 12484 --- [fraud-detect-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-03-20T20:51:58.343+08:00  INFO 12484 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Started FraudDetectionServiceApplication in 2.055 seconds (process running for 2.458)
+2025-03-20T20:52:01.063+08:00  INFO 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-20T20:52:01.063+08:00  INFO 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-20T20:52:01.064+08:00  INFO 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-03-20T20:52:01.353+08:00  INFO 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:52:01.353+08:00  INFO 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+2025-03-20T20:52:06.427+08:00  INFO 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: ERROR
+2025-03-20T20:52:06.427+08:00 ERROR 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Failed to initialize Publisher: Waited 5 seconds (plus 275000 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@42d82fca[status=PENDING]
+
+java.util.concurrent.TimeoutException: Waited 5 seconds (plus 275000 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@42d82fca[status=PENDING]
+	at com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:539) ~[guava-33.4.0-jre.jar:na]
+	at com.google.api.core.AbstractApiFuture.get(AbstractApiFuture.java:58) ~[api-common-2.46.1.jar:2.46.1]
+	at com.frauddetectservice.mq.MessagePublisherService.publish(MessagePublisherService.java:49) ~[classes/:na]
+	at com.frauddetectservice.controller.FraudDetectionController.detectFraud(FraudDetectionController.java:36) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:262) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-03-20T20:52:06.427+08:00  INFO 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: WARNING
+2025-03-20T20:52:06.427+08:00  WARN 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Fraud risk transaction detected: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+2025-03-20T20:53:06.505+08:00  INFO 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: ERROR
+2025-03-20T20:53:06.505+08:00 ERROR 12484 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Failed to initialize Publisher: Waited 60 seconds (plus 6725600 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@2919eeb7[status=PENDING]
+
+java.util.concurrent.TimeoutException: Waited 60 seconds (plus 6725600 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@2919eeb7[status=PENDING]
+	at com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:539) ~[guava-33.4.0-jre.jar:na]
+	at com.google.api.core.AbstractApiFuture.get(AbstractApiFuture.java:58) ~[api-common-2.46.1.jar:2.46.1]
+	at com.frauddetectservice.mq.MessagePublisherService.publishTransaction(MessagePublisherService.java:80) ~[classes/:na]
+	at com.frauddetectservice.controller.FraudDetectionController.detectFraud(FraudDetectionController.java:38) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:262) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-03-20T20:53:29.009+08:00  INFO 6256 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Starting FraudDetectionServiceApplication using Java 21.0.6 with PID 6256 (D:\Projects\frauddetectservice\target\classes started by Lenovo in D:\Projects\frauddetectservice)
+2025-03-20T20:53:29.009+08:00 DEBUG 6256 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Running with Spring Boot v3.2.1, Spring v6.1.2
+2025-03-20T20:53:29.009+08:00  INFO 6256 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : The following 1 profile is active: "default"
+2025-03-20T20:53:29.850+08:00  INFO 6256 --- [fraud-detect-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-20T20:53:29.850+08:00  INFO 6256 --- [fraud-detect-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-20T20:53:29.850+08:00  INFO 6256 --- [fraud-detect-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2025-03-20T20:53:29.944+08:00  INFO 6256 --- [fraud-detect-service] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-20T20:53:29.944+08:00  INFO 6256 --- [fraud-detect-service] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 892 ms
+2025-03-20T20:53:30.748+08:00  INFO 6256 --- [fraud-detect-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-03-20T20:53:30.748+08:00  INFO 6256 --- [fraud-detect-service] [main] c.f.FraudDetectionServiceApplication     : Started FraudDetectionServiceApplication in 2.119 seconds (process running for 2.54)
+2025-03-20T20:53:50.824+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-20T20:53:50.824+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-20T20:53:50.824+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-03-20T20:53:51.099+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:53:51.099+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+2025-03-20T20:53:56.178+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: ERROR
+2025-03-20T20:53:56.178+08:00 ERROR 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Failed to initialize Publisher: Waited 5 seconds (plus 6569100 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@5d715ee5[status=PENDING]
+
+java.util.concurrent.TimeoutException: Waited 5 seconds (plus 6569100 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@5d715ee5[status=PENDING]
+	at com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:539) ~[guava-33.4.0-jre.jar:na]
+	at com.google.api.core.AbstractApiFuture.get(AbstractApiFuture.java:58) ~[api-common-2.46.1.jar:2.46.1]
+	at com.frauddetectservice.mq.MessagePublisherService.publish(MessagePublisherService.java:49) ~[classes/:na]
+	at com.frauddetectservice.controller.FraudDetectionController.detectFraud(FraudDetectionController.java:36) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:262) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-03-20T20:53:56.178+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: WARNING
+2025-03-20T20:53:56.178+08:00  WARN 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Fraud risk transaction detected: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+2025-03-20T20:54:01.257+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: ERROR
+2025-03-20T20:54:01.257+08:00 ERROR 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Failed to initialize Publisher: Waited 5 seconds (plus 7902100 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@16a9cf09[status=PENDING]
+
+java.util.concurrent.TimeoutException: Waited 5 seconds (plus 7902100 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@16a9cf09[status=PENDING]
+	at com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:539) ~[guava-33.4.0-jre.jar:na]
+	at com.google.api.core.AbstractApiFuture.get(AbstractApiFuture.java:58) ~[api-common-2.46.1.jar:2.46.1]
+	at com.frauddetectservice.mq.MessagePublisherService.publishTransaction(MessagePublisherService.java:80) ~[classes/:na]
+	at com.frauddetectservice.controller.FraudDetectionController.detectFraud(FraudDetectionController.java:38) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:262) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-03-20T20:54:16.031+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:16.032+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+2025-03-20T20:54:21.054+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: ERROR
+2025-03-20T20:54:21.054+08:00 ERROR 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Failed to initialize Publisher: Waited 5 seconds (plus 8245100 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@2d958205[status=PENDING]
+
+java.util.concurrent.TimeoutException: Waited 5 seconds (plus 8245100 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@2d958205[status=PENDING]
+	at com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:539) ~[guava-33.4.0-jre.jar:na]
+	at com.google.api.core.AbstractApiFuture.get(AbstractApiFuture.java:58) ~[api-common-2.46.1.jar:2.46.1]
+	at com.frauddetectservice.mq.MessagePublisherService.publish(MessagePublisherService.java:49) ~[classes/:na]
+	at com.frauddetectservice.controller.FraudDetectionController.detectFraud(FraudDetectionController.java:36) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:262) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-03-20T20:54:21.054+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: WARNING
+2025-03-20T20:54:21.054+08:00  WARN 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Fraud risk transaction detected: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"bbb555","amount":22000,"country":"US","ipAddr":"192.168.4.10"}
+2025-03-20T20:54:26.130+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: ERROR
+2025-03-20T20:54:26.130+08:00 ERROR 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Failed to initialize Publisher: Waited 5 seconds (plus 12311900 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@44897c5b[status=PENDING]
+
+java.util.concurrent.TimeoutException: Waited 5 seconds (plus 12311900 nanoseconds delay) for com.google.api.core.AbstractApiFuture$InternalSettableFuture@44897c5b[status=PENDING]
+	at com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:539) ~[guava-33.4.0-jre.jar:na]
+	at com.google.api.core.AbstractApiFuture.get(AbstractApiFuture.java:58) ~[api-common-2.46.1.jar:2.46.1]
+	at com.frauddetectservice.mq.MessagePublisherService.publishTransaction(MessagePublisherService.java:80) ~[classes/:na]
+	at com.frauddetectservice.controller.FraudDetectionController.detectFraud(FraudDetectionController.java:38) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:262) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-03-20T20:54:31.350+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-8] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:31.350+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-8] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:34.950+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-9] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:34.950+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-9] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:36.532+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-10] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:36.532+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-10] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:37.545+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-11] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:37.545+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-11] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:38.482+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-12] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:38.482+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-12] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:39.302+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-13] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:39.302+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-13] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:39.954+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-14] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:39.954+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-14] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:40.448+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-16] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:40.448+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-16] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:41.047+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-15] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:41.047+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-15] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:41.476+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-17] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:41.476+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-17] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:41.992+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-18] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:41.992+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-18] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:42.765+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-19] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:42.765+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-19] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:43.348+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-20] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:43.348+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-20] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:43.893+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-2] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:43.893+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-2] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:44.439+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:44.439+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-1] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:45.018+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-3] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:45.018+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-3] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:45.577+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-4] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:45.577+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-4] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:46.150+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:46.150+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-5] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:50.689+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-6] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:50.689+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-6] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:51.501+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-7] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:51.501+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-7] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:52.095+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-8] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:52.095+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-8] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}
+2025-03-20T20:54:52.662+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-9] c.f.logging.GoogleCloudLoggingService    : Log sent successfully to google cloud logging: INFO
+2025-03-20T20:54:52.662+08:00  INFO 6256 --- [fraud-detect-service] [http-nio-8080-exec-9] c.f.logging.GoogleCloudLoggingService    : Received transaction for fraud defect: {"transactionId":"1aebc2ea-444-49fd-9a9d-27ecd4467dcf","accountId":"zzzz","amount":2200,"country":"CN","ipAddr":"192.168.4.5"}

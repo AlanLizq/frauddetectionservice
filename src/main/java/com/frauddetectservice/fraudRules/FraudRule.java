@@ -3,7 +3,6 @@ package com.frauddetectservice.fraudRules;
 import com.frauddetectservice.model.Transaction;
 import lombok.Data;
 
-// 规则抽象基类
 @Data
 public abstract class FraudRule {
     private String name;

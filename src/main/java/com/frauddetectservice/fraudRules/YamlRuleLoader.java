@@ -22,11 +22,9 @@ import java.util.stream.Collectors;
 @Component
 public class YamlRuleLoader {
 
-    // 规则配置文件路径
     @Value("classpath:fraud-rules/rules-config.yml")
     private Resource rulesResource;
 
-    // YAML解析器
     private final Yaml yaml;
 
     public YamlRuleLoader() {
@@ -37,7 +35,6 @@ public class YamlRuleLoader {
         );
     }
 
-    // 规则工厂映射
     private static final Map<String, BiFunction<RuleConfig.RuleDefinition, Map<String, FraudRule>, FraudRule>>
             RULE_FACTORIES = Map.of(
             "amount", YamlRuleLoader::createAmountRule,
@@ -49,10 +46,9 @@ public class YamlRuleLoader {
 
     public List<FraudRule> loadRules() {
         try (InputStream inputStream = rulesResource.getInputStream()) {
-            // 1. 加载并解析YAML配置
+
             RuleConfig config = yaml.load(inputStream);
 
-            // 2. 创建基础规则集合（先创建非组合规则）
             Map<String, FraudRule> ruleMap = new HashMap<>();
             for (RuleConfig.RuleDefinition def : config.getRules()) {
                 if (!"composite".equals(def.getType())) {
@@ -61,7 +57,6 @@ public class YamlRuleLoader {
                 }
             }
 
-            // 3. 创建组合规则（依赖其他规则）
             for (RuleConfig.RuleDefinition def : config.getRules()) {
                 if ( "composite".equals(def.getType())) {
                     FraudRule rule = createRule(def, ruleMap);
@@ -69,13 +64,12 @@ public class YamlRuleLoader {
                 }
             }
 
-            // 4. 按优先级排序
             return ruleMap.values().stream()
                     .sorted(Comparator.comparingInt(FraudRule::getPriority))
                     .collect(Collectors.toList());
 
         } catch (IOException e) {
-            System.out.println(String.format("Failed to load rules configuration"));
+            System.out.println("Failed to load rules configuration");
             throw new IllegalStateException("Rules configuration loading failed", e);
         }
     }
@@ -140,7 +134,7 @@ public class YamlRuleLoader {
                     }
                     return rule;
                 })
-                .collect(Collectors.toList());
+                .toList();
 
         return new CompositeRule(
                 def.getName(),
@@ -151,7 +145,6 @@ public class YamlRuleLoader {
         );
     }
 
-    // YAML配置映射类
     public static class RuleConfig {
         private List<RuleDefinition> rules;
         public RuleConfig() {}

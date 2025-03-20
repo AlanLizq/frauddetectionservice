@@ -7,18 +7,18 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: fraud-detection
-  minReplicas: 1  # 最小 Pod 数量
-  maxReplicas: 5  # 最大 Pod 数量 根据e2-med 机器计算
+  minReplicas: 1
+  maxReplicas: 5
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 80  # CPU 利用率达到 80% 时扩展
+          averageUtilization: 70
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 80  # 内存利用率达到 80% 时扩展
+          averageUtilization: 80

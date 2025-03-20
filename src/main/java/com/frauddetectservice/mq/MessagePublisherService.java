@@ -1,5 +1,6 @@
 package com.frauddetectservice.mq;
 
+import com.frauddetectservice.logging.GoogleCloudLoggingService;
 import com.frauddetectservice.model.Transaction;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.pubsub.v1.Publisher;
@@ -12,9 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * GCP Pub/Sub implementation of MQPublisher and MQSubscriber.
- */
+
 @Service
 public class MessagePublisherService implements MQPublisher {
 
@@ -25,9 +24,11 @@ public class MessagePublisherService implements MQPublisher {
     private String topicId;
 
     private final GoogleCredentials googleCredentials;
+    private final GoogleCloudLoggingService googleCloudLoggingService;
 
-    public MessagePublisherService(GoogleCredentials googleCredentials) {
+    public MessagePublisherService(GoogleCredentials googleCredentials, GoogleCloudLoggingService googleCloudLoggingService) {
         this.googleCredentials = googleCredentials;
+        this.googleCloudLoggingService = googleCloudLoggingService;
     }
 
     @Override
@@ -51,16 +52,15 @@ public class MessagePublisherService implements MQPublisher {
             // Shutdown Publisher to release resources
             publisher.shutdown();
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Failed to publish message: " + e.getMessage(), e);
+            //throw new RuntimeException("Failed to publish message: " + e.getMessage(), e);
+            googleCloudLoggingService.error("Failed to publish message: " + e.getMessage(), e);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize Publisher: " + e.getMessage(), e);
+            //throw new RuntimeException("Failed to initialize Publisher: " + e.getMessage(), e);
+            googleCloudLoggingService.error("Failed to initialize Publisher: " + e.getMessage(), e);
         }
+
     }
 
-    /**
-     * Helper method to publish a Transaction object with attributes.
-     * Retained from the original implementation for backward compatibility.
-     */
     public void publishTransaction(Transaction transaction) {
         try {
             ProjectTopicName topicName = ProjectTopicName.of(projectId, topicId);
@@ -77,15 +77,17 @@ public class MessagePublisherService implements MQPublisher {
                     .putAttributes("amount", String.valueOf(transaction.getAmount()))
                     .build();
 
-            publisher.publish(message).get(60, TimeUnit.SECONDS);
+            publisher.publish(message).get(5, TimeUnit.SECONDS);
             System.out.println("Transaction published: " + transaction.getTransactionId());
 
             // Shutdown Publisher to release resources
             publisher.shutdown();
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Failed to publish transaction: " + e.getMessage(), e);
+            //throw new RuntimeException("Failed to publish transaction: " + e.getMessage(), e);
+            googleCloudLoggingService.error("Failed to publish message: " + e.getMessage(), e);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize Publisher: " + e.getMessage(), e);
+            //throw new RuntimeException("Failed to initialize Publisher: " + e.getMessage(), e);
+            googleCloudLoggingService.error("Failed to initialize Publisher: " + e.getMessage(), e);
         }
     }
 }

@@ -16,7 +16,7 @@ public class IpRule extends FraudRule {
 
     @Override
     public String evaluate(Transaction transaction) {
-        // 假设非中国IP触发欺诈检测
+        //the ip not in white list is illegal
         if(!isChinaIp(transaction.getIpAddr())){
             return ruleName;
         }

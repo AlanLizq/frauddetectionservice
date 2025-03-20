@@ -20,13 +20,12 @@ public class MessageListenerService {
     public void startListening() {
         ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(projectId, subscriptionId);
 
-        // 使用 MessageReceiver 处理消息
         MessageReceiver receiver = (PubsubMessage message, AckReplyConsumer consumer) -> {
             try {
                 System.out.println("Received message: " + message.getData().toStringUtf8());
-                consumer.ack(); // 确认消息
+                consumer.ack();
             } catch (Exception e) {
-                consumer.nack(); // 处理失败
+                consumer.nack();
             }
         };
 

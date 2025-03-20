@@ -2,7 +2,6 @@ package com.frauddetectservice.fraudRules;
 
 import com.frauddetectservice.model.Transaction;
 
-// 地理位置规则
 public class LocationRule extends FraudRule {
     private String ruleName;
     public LocationRule(String name, int priority, String type) {
@@ -12,7 +11,7 @@ public class LocationRule extends FraudRule {
 
     @Override
     public String evaluate(Transaction transaction) {
-        // 假设非中国账户触发欺诈检测
+        // none China is illegal
         if( !transaction.getCountry().equals("CN")){
             return ruleName;
         }

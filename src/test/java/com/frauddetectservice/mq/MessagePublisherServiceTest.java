@@ -15,13 +15,13 @@ class MessagePublisherServiceTest {
 
     @Test
     void testPublishMessage() {
-        // 创建测试用的交易数据
         Transaction transaction = new Transaction();
-        transaction.setTransactionId("txn123");
+        transaction.setTransactionId("we1231");
         transaction.setAccountId("acc456");
-        transaction.setAmount(15000);
+        transaction.setAmount(18000);
+        transaction.setCountry("CN");
+        transaction.setIpAddr("192.168.1.1");
 
-        // 验证发布不会抛出异常
         assertDoesNotThrow(() -> messagePublisherService.publish(transaction.getTransactionId()));
         System.out.println("Test for publishMessage passed.");
     }

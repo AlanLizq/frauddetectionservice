@@ -9,8 +9,8 @@ spring:
 # Google Cloud Platform (GCP) 配置
 gcp:
   project-id: omega-palace-454013-m1          # GCP 项目 ID
-  service-account-key-path:  ${GOOGLE_APPLICATION_CREDENTIALS}
-  #service-account-key-path:  D:\Projects\frauddetectservice\omega-palace-454013-m1-6980f02eb9ce.json
+  #service-account-key-path:  ${GOOGLE_APPLICATION_CREDENTIALS}
+  service-account-key-path:  D:\Projects\frauddetectservice\omega-palace-454013-m1-6980f02eb9ce.json
   pubsub:
     topic-id: FraudDetection                   # Pub/Sub 主题 ID# 用于交易处理的主题
     subscription-id: FraudDetection-sub        # Pub/Sub 订阅 ID
@@ -41,4 +41,4 @@ pubsub:
     maxOutstandingElementCount: 1000          # 最大未确认的消息数量
     maxOutstandingRequestBytes: 10000000      # 最大未确认的消息字节数
 mq:
-  type: GCP
+  type: GooglePubSub

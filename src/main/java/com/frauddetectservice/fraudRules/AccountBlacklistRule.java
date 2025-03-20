@@ -45,7 +45,6 @@ public class AccountBlacklistRule extends FraudRule {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                // 跳过空行和注释（以#开头）
                 if (!line.trim().isEmpty() && !line.startsWith("#")) {
                     blacklist.add(line.trim());
                 }

@@ -1,9 +1,12 @@
 package com.frauddetectservice.service;
 
 import com.frauddetectservice.fraudRules.RuleEngine;
+import com.frauddetectservice.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 class DetectionServiceTest {
 
@@ -11,20 +14,20 @@ class DetectionServiceTest {
 
     @BeforeEach
     void setUp() {
-        // 模拟 RuleLoaderService
         RuleEngine ruleEngine = mock(RuleEngine.class);
-
-        // 初始化 FraudDetectionService
         detectionService = new DetectionService(ruleEngine);
     }
-/*
+
     @Test
     void testDetectFraud() {
         Transaction transaction = new Transaction();
-        transaction.setTransactionId("txn1");
-        transaction.setAccountId("acc123");
+        transaction.setTransactionId("we1231");
+        transaction.setAccountId("acc456");
+        transaction.setAmount(18000);
+        transaction.setCountry("CN");
+        transaction.setIpAddr("192.168.1.1");
 
-        String result = fraudDetectionService.detectFraud(transaction);
-        assertEquals("empty rules", result, "当规则为空时，应返回 'empty rules'");
-    }*/
+        String result = detectionService.detectFraud(transaction);
+        assertEquals("Transaction is valid and safe","Transaction is valid and safe", result);
+    }
 }

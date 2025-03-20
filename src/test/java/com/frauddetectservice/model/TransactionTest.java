@@ -11,12 +11,16 @@ class TransactionTest {
     @Test
     void testTransactionGettersAndSetters() {
         Transaction transaction = new Transaction();
-        transaction.setTransactionId("txn123");
-        transaction.setAccountId("acc456");
+        transaction.setTransactionId("ere234");
+        transaction.setAccountId("abb324");
         transaction.setAmount(15000);
+        transaction.setCountry("CN");
+        transaction.setIpAddr("192.168.1.1");
 
-        assertEquals("txn123", transaction.getTransactionId());
-        assertEquals("acc456", transaction.getAccountId());
+        assertEquals("ere234", transaction.getTransactionId());
+        assertEquals("abb324", transaction.getAccountId());
         assertEquals(15000, transaction.getAmount());
+        assertEquals("CN", transaction.getCountry());
+        assertEquals("192.168.1.1", transaction.getIpAddr());
     }
 }

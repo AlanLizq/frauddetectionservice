@@ -1,6 +1,6 @@
 package com.frauddetectservice.logging;
 
-public interface DistributedLoggingService {
+public interface LoggingService {
     void log(String message);
     void info(String message);
     void debug(String message);

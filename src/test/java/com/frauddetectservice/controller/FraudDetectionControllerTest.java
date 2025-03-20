@@ -2,8 +2,9 @@ package com.frauddetectservice.controller;
 
 import com.frauddetectservice.model.Transaction;
 import com.frauddetectservice.mq.MessagePublisherService;
+import com.frauddetectservice.response.ApiResponse;
 import com.frauddetectservice.service.DetectionService;
-import com.frauddetectservice.logging.GcpLoggingService;  // 引入 GcpLoggingService
+import com.frauddetectservice.logging.GoogleCloudLoggingService;  // 引入 GcpLoggingService
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,66 +27,61 @@ class FraudDetectionControllerTest {
     private DetectionService mockDetectionService;
 
     @Mock
-    private GcpLoggingService mockGcpLoggingService;  // 模拟 GcpLoggingService
+    private GoogleCloudLoggingService mockGoogleCloudLoggingService;
 
     @Mock
-    private MessagePublisherService mockMessagePublisherService;  // 模拟 GCPPubSubService
+    private MessagePublisherService mockMessagePublisherService;
 
     @InjectMocks
-    private FraudDetectionController fraudDetectionController;  // 控制器
+    private FraudDetectionController fraudDetectionController;
 
     @BeforeEach
     void setUp() {
-        // 初始化 Mockito 的 @Mock 注解的对象
         MockitoAnnotations.initMocks(this);
 
-        // 初始化 MockMvc
         mockMvc = MockMvcBuilders.standaloneSetup(fraudDetectionController).build();
     }
 
     @Test
     void testCheckFraud_ValidTransaction() throws Exception {
-        // 模拟 FraudDetectionService 的行为
-        when(mockDetectionService.detectFraud(any(Transaction.class))).thenReturn("Transaction is safe");
+        ApiResponse<String> mockSuccess = mock(ApiResponse.class);
+        when(mockSuccess.isSuccess()).thenReturn(true);
+        when(mockSuccess.getStatus()).thenReturn(200);
+        when(mockSuccess.getData()).thenReturn("Transaction is valid and safe");
+        when(mockSuccess.getError()).thenReturn(null);
+        when(mockDetectionService.detectFraud(any(Transaction.class))).thenReturn("Transaction is valid and safe");
 
-        // 执行请求并验证结果
-        mockMvc.perform(post("/fraud/check")
+        mockMvc.perform(post("/fraud/detect")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"transactionId\":\"txn1\",\"accountId\":\"acc123\",\"amount\":100.50}"))
+                        .content("{\"transactionId\":\"serwr500\",\"accountId\":\"acc123\",\"amount\":100,\"country\":\"CN\",\"ipAddr\":\"192.168.4.5\"}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Transaction is safe"));
+                .andExpect(content().string("{\"status\":200,\"success\":true,\"data\":\"Transaction is valid and safe\",\"error\":null}"));
 
-        // 验证 FraudDetectionService 的行为
         verify(mockDetectionService, times(1)).detectFraud(any(Transaction.class));
 
-        // 验证日志记录
-        verify(mockGcpLoggingService, times(1)).info(Mockito.anyString());  // 确保 info 方法被调用
-        verify(mockGcpLoggingService, times(0)).warn(Mockito.anyString());  // 确保没有调用 warn 方法
-
-        // 验证 GCPPubSubService 的行为
-        verify(mockMessagePublisherService, times(0)).publishTransaction(any(Transaction.class));  // 确保没有调用 publishTransaction 方法
+        verify(mockGoogleCloudLoggingService, times(1)).info(Mockito.anyString());
+        verify(mockGoogleCloudLoggingService, times(0)).warn(Mockito.anyString());
+        verify(mockMessagePublisherService, times(0)).publishTransaction(any(Transaction.class));
     }
 
     @Test
     void testCheckFraud_FraudulentTransaction() throws Exception {
-        // 模拟 FraudDetectionService 的行为
+        ApiResponse<String> mockError = mock(ApiResponse.class);
+        when(mockError.isSuccess()).thenReturn(true);
+        when(mockError.getStatus()).thenReturn(200);
+        when(mockError.getData()).thenReturn("Fraudulent Transaction");
+        when(mockError.getError()).thenReturn(null);
         when(mockDetectionService.detectFraud(any(Transaction.class))).thenReturn("Fraudulent Transaction");
 
-        // 执行请求并验证结果
-        mockMvc.perform(post("/fraud/check")
+        mockMvc.perform(post("/fraud/detect")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"transactionId\":\"txn1\",\"accountId\":\"acc123\",\"amount\":1000.50}"))
+                        .content("{\"transactionId\":\"wew234\",\"accountId\":\"bbb444\",\"amount\":2200,\"country\":\"CN\",\"ipAddr\":\"192.168.4.5\"}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Fraudulent Transaction"));
+                .andExpect(content().string("{\"status\":200,\"success\":true,\"data\":\"Fraudulent Transaction\",\"error\":null}"));
 
-        // 验证 FraudDetectionService 的行为
         verify(mockDetectionService, times(1)).detectFraud(any(Transaction.class));
-
-        // 验证日志记录
-        verify(mockGcpLoggingService, times(1)).info(Mockito.anyString());  // 确保 info 方法被调用
-        verify(mockGcpLoggingService, times(1)).warn(Mockito.anyString());  // 确保 warn 方法被调用
-
-        // 验证 GCPPubSubService 的行为
-        verify(mockMessagePublisherService, times(1)).publishTransaction(any(Transaction.class));  // 确保 publishTransaction 方法被调用
+        verify(mockGoogleCloudLoggingService, times(1)).info(Mockito.anyString());
+        verify(mockGoogleCloudLoggingService, times(1)).warn(Mockito.anyString());
+        verify(mockMessagePublisherService, times(1)).publishTransaction(any(Transaction.class));
     }
 }

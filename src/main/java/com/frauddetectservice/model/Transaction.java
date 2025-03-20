@@ -21,7 +21,7 @@ public class Transaction {
         try {
             return objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return "{}";
         }
     }
