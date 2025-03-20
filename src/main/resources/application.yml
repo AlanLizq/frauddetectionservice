@@ -6,7 +6,7 @@ spring:
   profiles:
     active: default                # 激活的配置环境（默认 default）
 
-# Google Cloud Platform (GCP) 配置
+# Google Cloud Platform 配置
 gcp:
   project-id: omega-palace-454013-m1          # GCP 项目 ID
   #service-account-key-path:  ${GOOGLE_APPLICATION_CREDENTIALS}

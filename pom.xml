@@ -11,7 +11,6 @@
   <name>fraud-detection-service</name>
   <description>Fraud Detection Service</description>
 
-  <!-- Parent POM -->
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -23,7 +22,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>21</java.version>
 
-    <!-- Versions -->
     <spring-boot.version>3.2.1</spring-boot.version>
     <google-cloud-pubsub.version>1.138.0</google-cloud-pubsub.version>
     <mockito.version>5.2.0</mockito.version>
@@ -33,21 +31,18 @@
   </properties>
 
   <dependencies>
-    <!-- Spring Boot Starter Web (用于构建 REST API) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
       <version>${spring-boot.version}</version>
     </dependency>
 
-    <!-- GCP Pub/Sub -->
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-pubsub</artifactId>
       <version>${google-cloud-pubsub.version}</version>
     </dependency>
 
-    <!-- Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -67,14 +62,12 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Google Cloud Logging 客户端库 -->
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-logging</artifactId>
       <version>${google-cloud-logging.version}</version>
     </dependency>
 
-    <!-- Spring Boot Starter Logging -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-logging</artifactId>
@@ -86,35 +79,30 @@
       </exclusions>
     </dependency>
 
-    <!-- 使用 SLF4J 默认绑定 -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
     </dependency>
 
-    <!-- Jackson 数据绑定 -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>${jackson.version}</version>
     </dependency>
 
-    <!-- Jackson 核心依赖 -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
       <version>${jackson.version}</version>
     </dependency>
 
-    <!-- Jackson 注解 -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
       <version>${jackson.version}</version>
     </dependency>
 
-    <!-- Spring Boot JSON Starter -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-json</artifactId>
@@ -126,7 +114,7 @@
     <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
-      <version>2.0</version> <!-- 或更高版本 -->
+      <version>2.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -138,13 +126,11 @@
 
   <build>
     <plugins>
-      <!-- Spring Boot Maven Plugin -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
 
-      <!-- Jacoco 插件，用于代码覆盖率 -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
