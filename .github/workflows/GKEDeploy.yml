@@ -1,0 +1,63 @@
+name: Deploy to GKE
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 设置JDK
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'slim'
+
+    # 构建JAR
+    - name: Build with Maven
+      run: mvn package -DskipTests
+
+    # 配置GCP环境
+    - name: Setup Gcloud
+      uses: google-github-actions/setup-gcloud@v1.1.1
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT }}
+        export_default_credentials: true
+
+    # 配置Docker访问GCR
+    - name: Configure Docker
+      run: gcloud auth configure-docker --quiet
+
+    # 获取GKE集群凭证
+    - name: Get GKE Credentials
+      run: |-
+        gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
+          --region ${{ secrets.GKE_REGION }} \
+          --project ${{ secrets.GCP_PROJECT }}
+
+    # 构建并推送Docker镜像
+    - name: Build and Push Docker Image
+      id: docker
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          gcr.io/${{ secrets.GCP_PROJECT }}/springboot-app:${{ github.sha }}
+          gcr.io/${{ secrets.GCP_PROJECT }}/springboot-app:latest
+
+    # 替换Kubernetes配置中的占位符
+    - name: Update Kubernetes Config
+      run: |
+        sed -i "s#gcr.io/PROJECT_ID/springboot-app:IMAGE_TAG#gcr.io/${{ secrets.GCP_PROJECT }}/springboot-app:${{ github.sha }}#g" kubernetes/deployment.yaml
+
+    # 部署到GKE
+    - name: Apply Kubernetes Configuration
+      run: kubectl apply -f kubernetes/
